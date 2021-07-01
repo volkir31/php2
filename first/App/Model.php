@@ -4,6 +4,7 @@
 namespace App;
 
 
+use App\Models\Article;
 use Exception;
 
 abstract class Model
@@ -46,7 +47,7 @@ abstract class Model
         return ['keys' => $keys, 'data' => $data];
     }
 
-    public function insert()
+    protected function insert()
     {
         $unformedData = $this->getData();
         $keys = $unformedData['keys'];
@@ -63,23 +64,31 @@ abstract class Model
         $this->id = $db->getLastId();
     }
 
-    public function update()
+    protected function update()
     {
         $unformedData = $this->getData();
         $keys = $unformedData['keys'];
         $data = $unformedData['data'];
-
-        foreach ($data as $index => $datum) {
-
+        $first = [];
+        foreach ($keys as $index => $datum) {
+            $first[$datum] = ':' . $datum;
         }
-
+        $final = [];
+        foreach ($first as $key => $value) {
+            $final[] = "{$key}={$value}";
+        }
         $sql = 'UPDATE ' . static::TABLE . ' SET '
-            . implode('', $keys) . implode(',', array_keys($data)) .
-            ')' .
-            'WHERE id=' . $this->id;
+            . implode(',', $final) . ' WHERE id=' . $this->id;
+        $db = new Db();
+        $db->execute($sql, $data);
+    }
 
-        echo $sql;
-//        $db = new Db();
-//        $db->execute($sql, $data);
+    public function save()
+    {
+        if (isset($this->id) && !empty(static::findById($this->id))) {
+            $this->update();
+        }else{
+            $this->insert();
+        }
     }
 }

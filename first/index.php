@@ -3,12 +3,21 @@ ini_set('display_errors', 1);
 require __DIR__ . '/autoload.php';
 
 $data = \App\Models\Article::getLastNews(3);
+
 $article = new \App\Models\Article();
-$a = \App\Models\Article::findById(1)[0];
-$a->title = 'aaaa';
-$a->article = 'bbbb';
-$a->update();
+$article->article = 'loremipsum987654';
+$article->title = 'lorem098765432';
+$article->save();
+
+try {
+    $a = \App\Models\Article::findById('1')[0];
+} catch (Exception $e) {
+}
+$a->title = 'bbb';
+$a->article = 'aaa';
+$a->save();
 var_dump($a);
+var_dump($article);
 ?>
 <!doctype html>
 <html lang="en">
