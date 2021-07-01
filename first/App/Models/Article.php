@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
+
 use App\Db;
+use App\Model;
 
-class Article
+class Article extends Model
 {
-    public string $id;
-    public string $title;
-    public string $content;
+    public const TABLE = 'news';
 
-    public static function findAll(): string
+    public string $title;
+    public string $article;
+
+    public static function getLastNews(int $limit)
     {
         $db = new Db();
-        return $db->query('SELECT * FROM news', [], Article::class);
+        return $db->query('SELECT * FROM news LIMIT ' . $limit, [], self::class);
     }
+
 }

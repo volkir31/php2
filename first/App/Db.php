@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App;
-
 
 use PDO;
 
@@ -12,10 +10,11 @@ class Db
 
     public function __construct()
     {
-        $config = (include __DIR__ . '/../config.php')['db'];
-        $this->dbh = new PDO('mysql:host=localhost;dbname=' . $config['dbname'],
-            $config['login'],
-            $config['password']
+        $config = Config::getInstance();
+        $this->dbh = new PDO('mysql:host=' . $config->getField('host') .
+            ';dbname=' . $config->getField('dbname'),
+            $config->getField('login'),
+            $config->getField('password')
         );
     }
 
@@ -24,5 +23,16 @@ class Db
         $sth = $this->dbh->prepare($sql);
         $sth->execute($data);
         return $sth->fetchAll(PDO::FETCH_CLASS, $class);
+    }
+
+    public function execute(string $sql, array $params = []): bool
+    {
+        $sth = $this->dbh->prepare($sql);
+        return $sth->execute($params);
+    }
+
+    public function getLastId()
+    {
+        return $this->dbh->lastInsertId();
     }
 }
