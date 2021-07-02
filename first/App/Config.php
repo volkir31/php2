@@ -11,7 +11,7 @@ class Config
         'host'=>'localhost',
         'dbname' => 'php2',
         'login' => 'root',
-        'password' => 'mysqlPAS!root',
+        'password' => 'root',
     ];
     private static Config $instance;
 

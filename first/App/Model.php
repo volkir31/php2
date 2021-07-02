@@ -11,6 +11,10 @@ abstract class Model
 {
     public string $id;
 
+    /**
+     * return all row from table
+     * @return array
+     */
     public static function findAll(): array
     {
         $db = new Db();
@@ -31,6 +35,10 @@ abstract class Model
         throw new Exception('id must be numeric');
     }
 
+    /**
+     * return data from object vars
+     * @return array
+     */
     private function getData(): array
     {
         $fields = get_object_vars($this);
@@ -47,6 +55,9 @@ abstract class Model
         return ['keys' => $keys, 'data' => $data];
     }
 
+    /**
+     * insert article to database
+     */
     protected function insert()
     {
         $unformedData = $this->getData();
@@ -64,6 +75,9 @@ abstract class Model
         $this->id = $db->getLastId();
     }
 
+    /**
+     * update row by id
+     */
     protected function update()
     {
         $unformedData = $this->getData();
@@ -83,11 +97,21 @@ abstract class Model
         $db->execute($sql, $data);
     }
 
+    /**
+     * remove row from database
+     */
+    public function delete()
+    {
+        $sql = 'DELETE FROM ' . static::TABLE . ' WHERE id=' . $this->id;
+        $db = new Db();
+        $db->execute($sql, []);
+    }
+
     public function save()
     {
         if (isset($this->id) && !empty(static::findById($this->id))) {
             $this->update();
-        }else{
+        } else {
             $this->insert();
         }
     }

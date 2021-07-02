@@ -1,8 +1,8 @@
 <?php
 
-function __autoload($class)
+function autoloader($class)
 {
     require __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
 }
 
-//spl_autoload_register('autoloader');
+spl_autoload_register('autoloader');
