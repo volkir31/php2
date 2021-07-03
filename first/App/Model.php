@@ -30,7 +30,11 @@ abstract class Model
         if (is_numeric($id)) {
             $db = new Db();
             $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=' . $id;
-            return $db->query($sql, [], static::class);
+            $result = $db->query($sql, [], static::class);
+            if (empty($result)){
+                throw new Exception('id not exist');
+            }
+            return $result;
         }
         throw new Exception('id must be numeric');
     }

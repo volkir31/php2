@@ -18,7 +18,7 @@ class Article extends Controller
             try {
                 $this->view->article = \App\Models\Article::findById($id);
             } catch (Exception $e) {
-                $news = [];
+                echo $e->getMessage();
             }
         }
         $this->view->display(__DIR__ . '/../../templates/Article.php');
