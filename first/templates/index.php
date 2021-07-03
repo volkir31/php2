@@ -14,14 +14,8 @@ use App\View;
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        .admin{
-            font-size: 26px;
-        }
-    </style>
 </head>
 <body>
-<a href="?ctrl=admin" class="admin">Admin panel</a>
 <ul>
     <?php
     foreach ($this->articles as $datum) {

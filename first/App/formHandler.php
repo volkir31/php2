@@ -20,7 +20,7 @@ if (isset($_POST['title']) && !empty($_POST['title']) &&
     $article->article = $_POST['article'];
     $article->save();
 
-    header('location: /first/Public/index.php?ctrl=admin&name=Egor');
+    header('location: /first/public/admin.php?name=Egor');
 }
 
 if (isset($_POST['removableId']) && !empty($_POST['removableId']) && is_numeric($_POST['removableId'])) {
@@ -34,5 +34,5 @@ if (isset($_POST['removableId']) && !empty($_POST['removableId']) && is_numeric(
         $article->delete();
     }
 
-    header('location: /first/Public/index.php?ctrl=admin&name=Egor');
+    header('location: /first/public/admin.php?name=Egor');
 }

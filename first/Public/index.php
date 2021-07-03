@@ -1,10 +1,9 @@
 <?php
-
 require __DIR__ . '/../App/autoload.php';
 
 
 $controller = 'Index';
-if (isset($_GET['ctrl'])) {
+if (isset($_GET['ctrl']) && 'admin' !== lcfirst($_GET['ctrl'])) {
     $controller = trim($_GET['ctrl']);
 }
 $class = '\App\Controllers\\' . ucfirst($controller);
