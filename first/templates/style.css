@@ -1,0 +1,25 @@
+body{
+    display: flex;
+    justify-content: space-around;
+}
+div{
+    margin-top: 10px;
+}
+li {
+    border: 1px solid #000;
+    width: 100%;
+    max-width: 500px;
+    padding: 5px;
+}
+
+* {
+    margin: 0;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+form>*{
+    margin-bottom: 10px;
+}
