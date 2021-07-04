@@ -23,10 +23,6 @@ class Config
     {
     }
 
-    private function __wakeup()
-    {
-    }
-
     public static function getInstance(): Config
     {
         if (empty(self::$instance)) {

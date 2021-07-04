@@ -1,8 +1,8 @@
 <?php
 
 use App\Exceptions\DbException;
-
 require __DIR__ . '/../App/autoload.php';
+
 
 $controller = 'Index';
 if (isset($_GET['ctrl']) && 'admin' !== lcfirst($_GET['ctrl'])) {

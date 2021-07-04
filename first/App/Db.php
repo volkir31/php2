@@ -17,10 +17,10 @@ class Db
     public function __construct()
     {
         $config = Config::getInstance();
-        $host = $config->getHost();
-        $dbname = $config->getDbname();
-        $login = $config->getLogin();
-        $password = $config->getPassword();
+        $host = $config->getField('host');
+        $dbname = $config->getField('dbname');
+        $login = $config->getField('login');
+        $password = $config->getField('password');
         try {
             $this->dbh = new PDO('mysql:host=' . $host . ';dbname=' . $dbname, $login, $password);
         }catch (PDOException $e){
@@ -39,14 +39,16 @@ class Db
     public function query(string $sql, array $data, string $class): array
     {
         $sth = $this->dbh->prepare($sql);
-        if (!$sth->execute($data)) {
+        try {
+            $sth->execute($data);
+        }catch (PDOException $e){
             throw new DbException($sql, 'Error when execute query');
         }
         $result = $sth->fetchAll(PDO::FETCH_CLASS, $class);
         if (empty($result)) {
-            throw new DbException('', 'No data');
+            throw new DbException('', '404 Error - not found', 404);
         }
-        return $sth->fetchAll(PDO::FETCH_CLASS, $class);
+        return $result;
     }
 
     /**

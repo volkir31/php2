@@ -37,10 +37,12 @@ abstract class Model
             $db = new Db();
             $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=' . $id;
             $result = $db->query($sql, [], static::class);
-            if (empty($result)) {
+            try {
+                return $result;
+            }catch (DbException $e) {
                 throw new DbException('', '404 Error - not found', 404);
             }
-            return $result;
+
         }
         throw new Exception('id must be numeric');
     }
@@ -65,6 +67,7 @@ abstract class Model
         return ['keys' => $keys, 'data' => $data];
     }
 
+    // TODO
     public function fill(array $data)
     {
         foreach ($data as $index => $datum) {
