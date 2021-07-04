@@ -32,6 +32,7 @@ class Article extends Model
      * return news from first to limit
      * @param int $limit
      * @return array
+     * @throws DbException
      */
     public static function getLastNews(int $limit): array
     {

@@ -22,7 +22,7 @@ abstract class Model
         try {
             $sql = 'SELECT * FROM ' . static::TABLE;
             return $db->query($sql, [], static::class);
-        }catch (DbException $e){
+        } catch (DbException $e) {
             throw new DbException($e->getSql(), $e->getMessage());
         }
 
@@ -37,8 +37,8 @@ abstract class Model
             $db = new Db();
             $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=' . $id;
             $result = $db->query($sql, [], static::class);
-            if (empty($result)){
-                throw new DbException('','id not exist');
+            if (empty($result)) {
+                throw new DbException('', '404 Error - not found', 404);
             }
             return $result;
         }
@@ -63,6 +63,15 @@ abstract class Model
             $data[':' . $key] = $field;
         }
         return ['keys' => $keys, 'data' => $data];
+    }
+
+    public function fill(array $data)
+    {
+        foreach ($data as $index => $datum) {
+            if ('name' === $index){
+
+            }
+        }
     }
 
     /**

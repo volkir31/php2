@@ -4,7 +4,6 @@ use App\Exceptions\DbException;
 
 require __DIR__ . '/../App/autoload.php';
 
-
 $controller = 'Index';
 if (isset($_GET['ctrl']) && 'admin' !== lcfirst($_GET['ctrl'])) {
     $controller = trim($_GET['ctrl']);
@@ -15,6 +14,10 @@ try {
     $controller->action();
 } catch (DbException $e) {
     $error = new \App\Controllers\Error();
-    $error->setError($e->getMessage() . ': ' . $e->getSql() . ' in ' . $e->getFile() . ':' . $e->getLine());
+    if (404 !==$e->getCode()) {
+        $error->setError($e->getMessage() . ': ' . $e->getSql() . ' in ' . $e->getFile() . ':' . $e->getLine());
+    }else{
+        $error->setError($e->getMessage());
+    }
     $error->action();
 }

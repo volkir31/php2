@@ -5,10 +5,13 @@ namespace App\Controllers;
 
 
 use App\Controller;
+use App\Exceptions\DbException;
 
 class Index extends Controller
 {
-
+    /**
+     * @throws DbException
+     */
     public function accessHandler()
     {
         $this->view->articles = \App\Models\Article::findAll();
