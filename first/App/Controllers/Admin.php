@@ -3,8 +3,8 @@
 
 namespace App\Controllers;
 
-
 use App\Controller;
+
 
 class Admin extends Controller
 {
@@ -13,9 +13,10 @@ class Admin extends Controller
         return isset($_GET['name']) && 'Egor' === $_GET['name'];
     }
 
-    public function accessHandler(){
-        $this->view->articles =  \App\Models\Article::findAll();
-        $this->view->display(__DIR__. '/../../templates/admin.php');
+    public function accessHandler()
+    {
+        $this->view->articles = \App\Models\Article::findAll();
+        $this->view->display(__DIR__ . '/../../templates/admin.php');
     }
 
 }

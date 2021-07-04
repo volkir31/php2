@@ -4,7 +4,7 @@
 namespace App;
 
 
-use App\Models\Article;
+use App\Exceptions\DbException;
 use Exception;
 
 abstract class Model
@@ -14,12 +14,18 @@ abstract class Model
     /**
      * return all row from table
      * @return array
+     * @throws DbException
      */
     public static function findAll(): array
     {
         $db = new Db();
-        $sql = 'SELECT * FROM ' . static::TABLE;
-        return $db->query($sql, [], static::class);
+        try {
+            $sql = 'SELECT * FROM ' . static::TABLE;
+            return $db->query($sql, [], static::class);
+        }catch (DbException $e){
+            throw new DbException($e->getSql(), $e->getMessage());
+        }
+
     }
 
     /**
@@ -32,7 +38,7 @@ abstract class Model
             $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=' . $id;
             $result = $db->query($sql, [], static::class);
             if (empty($result)){
-                throw new Exception('id not exist');
+                throw new DbException('','id not exist');
             }
             return $result;
         }

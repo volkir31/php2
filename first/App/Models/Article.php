@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Db;
+use App\Exceptions\DbException;
 use App\Model;
 use Exception;
 

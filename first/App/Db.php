@@ -2,20 +2,28 @@
 
 namespace App;
 
+use App\Exceptions\DbException;
 use PDO;
 
 class Db
 {
     protected object $dbh;
 
+    /**
+     * @throws DbException
+     */
     public function __construct()
     {
         $config = Config::getInstance();
-        $this->dbh = new PDO('mysql:host=' . $config->getField('host') .
-            ';dbname=' . $config->getField('dbname'),
-            $config->getField('login'),
-            $config->getField('password')
-        );
+        try {
+            $this->dbh = new PDO('mysql:host=' . $config->getField('host') .
+                ';dbname=' . $config->getField('dbname'),
+                $config->getField('login'),
+                $config->getField('password')
+            );
+        } catch (\PDOException $e) {
+            throw new DbException('', 'Error connection to db');
+        }
     }
 
     /**
@@ -24,11 +32,14 @@ class Db
      * @param array $data
      * @param string $class
      * @return array
+     * @throws DbException
      */
     public function query(string $sql, array $data, string $class): array
     {
         $sth = $this->dbh->prepare($sql);
-        $sth->execute($data);
+        if (!$sth->execute($data)) {
+            throw new DbException($sql, 'Error when execute query');
+        }
         return $sth->fetchAll(PDO::FETCH_CLASS, $class);
     }
 
