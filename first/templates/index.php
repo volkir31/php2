@@ -2,10 +2,12 @@
 <?php
 /**
  * @var View $this
+ * @var Timer $timer
  */
 
 use App\View;
-
+use SebastianBergmann\Timer\ResourceUsageFormatter;
+use SebastianBergmann\Timer\Timer;
 ?>
 <html lang="en">
 <head>
@@ -19,6 +21,9 @@ use App\View;
 <body>
 <ul class="article">
     <?php
+    $timer = new Timer();
+    $timer->start();
+    sleep(1);
     foreach ($this->getData('articles') as $datum) {
         ?>
         <li>
@@ -31,7 +36,11 @@ use App\View;
         </li>
         <?php
     }
+    $duration = $timer->stop();
     ?>
 </ul>
+<footer>
+    <h1><?php echo (new ResourceUsageFormatter)->resourceUsage($duration);?></h1>
+</footer>
 </body>
 </html>

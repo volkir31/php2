@@ -32,3 +32,9 @@ h1{
 a{
     text-decoration: none;
 }
+
+footer>h1{
+    display: block;
+    margin-top: 50px;
+    font-size: 26px;
+}

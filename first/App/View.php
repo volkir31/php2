@@ -3,6 +3,8 @@
 
 namespace App;
 
+use SebastianBergmann\Timer\Timer;
+
 class View implements \Countable, \Iterator
 {
     private int $position = 0;
