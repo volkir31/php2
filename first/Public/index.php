@@ -13,6 +13,7 @@ $controller = new $class;
 try {
     $controller->action();
 } catch (DbException $e) {
+    $logger = new \App\Logger($e);
     $error = new \App\Controllers\Error();
     if (404 !==$e->getCode()) {
         $error->setError($e->getMessage() . ': ' . $e->getSql() . ' in ' . $e->getFile() . ':' . $e->getLine());
@@ -20,4 +21,5 @@ try {
         $error->setError($e->getMessage());
     }
     $error->action();
+    $logger->log();
 }

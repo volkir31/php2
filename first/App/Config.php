@@ -11,7 +11,7 @@ class Config
         'host' => 'localhost',
         'dbname' => 'php2',
         'login' => 'root',
-        'password' => 'root',
+        'password' => 'Linux@1991V4',
     ];
     private static Config $instance;
 

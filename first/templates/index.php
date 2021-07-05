@@ -18,7 +18,7 @@ use App\View;
 <body>
 <ul>
     <?php
-    foreach ($this->articles as $datum) {
+    foreach ($this->getData('articles') as $datum) {
         ?>
         <li>
             <a href="?ctrl=article&id=<?= $datum->id ?>">

@@ -1,5 +1,7 @@
 <?php
 
+use App\Exceptions\MultiExceptions;
+
 require __DIR__ . '/autoload.php';
 
 $article = new \App\Models\Article();
@@ -12,15 +14,17 @@ if (isset($_POST['title']) && !empty($_POST['title']) &&
     $author->save();
 
     $article = new \App\Models\Article();
+
+
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $article->id = $_POST['id'];
     }
-    $article->authorId = $author->id;
-    $article->title = $_POST['title'];
     $article->article = $_POST['article'];
+    $article->title = $title = $_POST['title'];
+    $article->authorId = $author->name = $_POST['author'];
     $article->save();
 
-    header('location: /first/public/admin.php?name=Egor');
+    header('location: /Public/admin.php?name=Egor');
 }
 
 if (isset($_POST['removableId']) && !empty($_POST['removableId']) && is_numeric($_POST['removableId'])) {
@@ -34,5 +38,5 @@ if (isset($_POST['removableId']) && !empty($_POST['removableId']) && is_numeric(
         $article->delete();
     }
 
-    header('location: /first/public/admin.php?name=Egor');
+    header('location: /Public/admin.php?name=Egor');
 }

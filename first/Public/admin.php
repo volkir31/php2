@@ -1,6 +1,7 @@
 <?php
 
 use App\Exceptions\DbException;
+use App\Exceptions\MultiExceptions;
 
 require __DIR__ . '/../App/autoload.php';
 
@@ -11,4 +12,8 @@ try {
     $error = new \App\Controllers\Error();
     $error->setError($e->getMessage() . ': ' . $e->getSql() . ' in ' . $e->getFile() . ':' . $e->getLine());
     $error->action();
+}catch (MultiExceptions $e){
+    foreach ($e->getErrors() as $error){
+        echo $error->getMessage();
+    }
 }

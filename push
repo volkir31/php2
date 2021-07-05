@@ -1,0 +1,19 @@
+#bin/bash!
+
+echo 'Enter dbname'
+
+read dbname
+
+rm $dbname 
+
+mysqldump -u root -pLinux@1991V4 $dbname > $dbname.sql
+
+git add -A
+
+echo 'Enter your commit'
+
+read commit
+
+git commit -m "$commit"
+
+git push

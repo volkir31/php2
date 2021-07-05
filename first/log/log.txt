@@ -1,0 +1,7 @@
+05 07 2021 10:12:38 sdasd /home/egor/php2/first/Public/index.php:24
+05 07 2021 10:12:42 sdasd /home/egor/php2/first/Public/index.php:24
+05 07 2021 10:12:42 sdasd /home/egor/php2/first/Public/index.php:24
+05 07 2021 10:12:42 sdasd /home/egor/php2/first/Public/index.php:24
+05 07 2021 10:12:42 sdasd /home/egor/php2/first/Public/index.php:24
+05 07 2021 10:12:42 sdasd /home/egor/php2/first/Public/index.php:24
+05 07 2021 10:14:43 404 Error - not found /home/egor/php2/first/App/Db.php:49

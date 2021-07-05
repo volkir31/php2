@@ -13,7 +13,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1><?= $this->article[0]->title ?></h1>
-<h2><?= $this->article[0]->article ?></h2>
+<h1><?= $this->getData('article')[0]->title ?></h1>
+<h2><?= $this->getData('article')[0]->article ?></h2>
 </body>
 </html>

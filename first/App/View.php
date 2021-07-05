@@ -8,7 +8,21 @@ class View implements \Countable, \Iterator
     private int $position = 0;
     protected array $data;
 
-   use Traits\Magic;
+//    use Traits\Magic;
+
+    public function add(string $field, array $data)
+    {
+       $this->data[$field] = $data;
+    }
+
+    /**
+     * @param string $field
+     * @return array
+     */
+    public function getData(string $field): array
+    {
+        return $this->data[$field];
+    }
 
     /**
      * @param string $template
@@ -55,6 +69,6 @@ class View implements \Countable, \Iterator
 
     public function rewind()
     {
-        $this->position= 0;
+        $this->position = 0;
     }
 }

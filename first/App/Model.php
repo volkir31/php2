@@ -5,6 +5,7 @@ namespace App;
 
 
 use App\Exceptions\DbException;
+use App\Exceptions\MultiExceptions;
 use Exception;
 
 abstract class Model
@@ -39,7 +40,7 @@ abstract class Model
             $result = $db->query($sql, [], static::class);
             try {
                 return $result;
-            }catch (DbException $e) {
+            } catch (DbException $e) {
                 throw new DbException('', '404 Error - not found', 404);
             }
 
@@ -67,14 +68,34 @@ abstract class Model
         return ['keys' => $keys, 'data' => $data];
     }
 
-    // TODO
+
+    /**
+     * @throws MultiExceptions
+     */
     public function fill(array $data)
     {
+        var_dump($data);
         foreach ($data as $index => $datum) {
-            if ('name' === $index){
-
-            }
+//            $errors = new MultiExceptions();
+//            var_dump($datum);
+//            if ('name' === $index && 1 >= strlen($datum)) {
+//                $errors->addException(new Exception('Name must be more than 2 characters'));
+//                continue;
+//            }
+//            if ('article' === $index && str_word_count($datum) <= 1) {
+//                $errors->addException(new Exception('Article must be more than 5 words'));
+//                continue;
+//            }
+//            if ('title' === $index && str_word_count($datum) <= 2) {
+//                $errors->addException(new Exception('Title must be more than 2 words'));
+//                continue;
+//            }
+            $this->$index = $datum;
+//            if ($errors->isEmpty()) {
+//                throw $errors;
+//            }
         }
+        return $this;
     }
 
     /**
@@ -85,13 +106,14 @@ abstract class Model
         $unformedData = $this->getData();
         $keys = $unformedData['keys'];
         $data = $unformedData['data'];
-
+        var_dump($keys);
+        var_dump($data);
         $sql = 'INSERT INTO ' . static::TABLE . ' ('
             . implode(',', $keys) .
             ') VALUES ('
             . implode(',', array_keys($data))
             . ')';
-
+        echo $sql;
         $db = new Db();
         $db->execute($sql, $data);
         $this->id = $db->getLastId();
