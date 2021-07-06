@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "phpunit/php-timer": "^5.0"
-    }
+    },
+  "require": {
+    "ext-pdo": "*"
+  }
 }

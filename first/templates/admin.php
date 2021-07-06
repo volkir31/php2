@@ -10,19 +10,39 @@
 </head>
 <body>
 <div class="content">
-    <ul>
+<!--    <ul>-->
+<!--        --><?php
+//        foreach ($this->articles as $article) {
+//            ?>
+<!--            <li>-->
+<!--                <p>--><?//= $article->id ?><!--</p>-->
+<!--                <h1>--><?//= $article->title ?><!--</h1>-->
+<!--                <h2>--><?//= $article->article ?><!--</h2>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            --><?php
+//        }
+//        ?>
+<!--    </ul>-->
+    <table>
+        <tr>
+            <td>TITLE</td>
+            <td>ARTICLE</td>
+        </tr>
         <?php
-        foreach ($this->articles as $article) {
-            ?>
-            <li>
-                <p><?= $article->id ?></p>
-                <h1><?= $article->title ?></h1>
-                <h2><?= $article->article ?></h2>
-                </a>
-            </li>
-            <?php
-        }
+        $data = \App\Models\Article::findAll();
+        $a = ['title' => function (\App\Models\Article $article) {
+                return $article->title;
+            },
+            'trimmedText' => function (\App\Models\Article $article) {
+                return mb_strimwidth($article->article, 0, 100);
+            }
+
+        ];
+        $table = new \App\AdminDataTable($data, $a);
+        echo $table->render();
         ?>
+    </table>
 </div>
 <div class="admin">
     <h1>Change/insert</h1>
@@ -39,6 +59,6 @@
         <button type="submit">Delete</button>
     </form>
 </div>
-</ul>
+
 </body>
 </html>

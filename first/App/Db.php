@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exceptions\DbException;
+use App\Models\Article;
 use PDO;
 use PDOException;
 
@@ -23,8 +24,8 @@ class Db
         $password = $config->getField('password');
         try {
             $this->dbh = new PDO('mysql:host=' . $host . ';dbname=' . $dbname, $login, $password);
-        }catch (PDOException $e){
-            throw new DbException( '', 'Connection Error');
+        } catch (PDOException $e) {
+            throw new DbException('', 'Connection Error');
         }
     }
 
@@ -41,7 +42,7 @@ class Db
         $sth = $this->dbh->prepare($sql);
         try {
             $sth->execute($data);
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             throw new DbException($sql, 'Error when execute query');
         }
         $result = $sth->fetchAll(PDO::FETCH_CLASS, $class);
@@ -49,6 +50,19 @@ class Db
             throw new DbException('', '404 Error - not found', 404);
         }
         return $result;
+    }
+
+    public function queryEach(string $sql, array $data): \Generator
+    {
+        $sth = $this->dbh->prepare($sql);
+        try {
+            $sth->execute($data);
+        } catch (PDOException $e) {
+            throw new DbException($sql, 'Error when execute query');
+        }
+        for ($i = 0; $i < $sth->rowCount(); $i++) {
+            yield $sth->fetch(PDO::FETCH_CLASS, Article::class);
+        }
     }
 
     /**
