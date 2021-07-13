@@ -30,17 +30,24 @@
             <td>ARTICLE</td>
         </tr>
         <?php
-        $data = \App\Models\Article::findAll();
-        $a = ['title' => function (\App\Models\Article $article) {
-                return $article->title;
-            },
-            'trimmedText' => function (\App\Models\Article $article) {
-                return mb_strimwidth($article->article, 0, 100);
-            }
-
-        ];
-        $table = new \App\AdminDataTable($data, $a);
-        echo $table->render();
+//        $data = \App\Models\Article::findAll();
+//        $a = ['title' => function (\App\Models\Article $article) {
+//                return $article->title;
+//            },
+//            'trimmedText' => function (\App\Models\Article $article) {
+//                return mb_strimwidth($article->article, 0, 100);
+//            }
+//
+//        ];
+//        $table = new \App\AdminDataTable($data, $a);
+//        echo $this->view->table->render();
+        foreach ($this->getData('table') as $article){
+            ?>
+        <tr>
+            <?= $article?>
+        </tr>
+        <?php
+        }
         ?>
     </table>
 </div>

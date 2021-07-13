@@ -10,7 +10,7 @@ class AdminDataTable
 {
     protected array $models;
     protected array $data;
-    protected string $table = '';
+    protected array $table;
 
     public function __construct(array $data, array $models)
     {
@@ -21,11 +21,12 @@ class AdminDataTable
     public function prepare()
     {
         foreach ($this->data as $article) {
-            $data = '<tr>';
+            $data = '';
             foreach ($this->models as $value) {
                 $data .= '<td>' . $value($article) . '</td>';
             }
-            $this->table .= $data . '</tr>';
+            $this->table[] = $data;
+
         }
     }
 
